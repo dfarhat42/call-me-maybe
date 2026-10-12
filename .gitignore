@@ -2,3 +2,4 @@
 data
 llm_sdk
 uv.lock
+.venv
