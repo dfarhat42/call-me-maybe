@@ -2,7 +2,7 @@ install:
 	uv sync
 
 run:
-	uv run python3 -m src --functions_definition /home/dfarhat/sgoinfre/call_me_maybe/data/input/functions_definition.json  --input /home/dfarhat/sgoinfre/call_me_maybe/data/input/function_calling_tests.json  --output /home/dfarhat/sgoinfre/call_me_maybe/data/output/function_calling_results.json
+	uv run python3 -m src --functions_definition data/input/functions_definition.json  --input data/input/function_calling_tests.json  --output data/output/function_calling_results.json
 
 debug:
 	uv run python3 pdb main.py
