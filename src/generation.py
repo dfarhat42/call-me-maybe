@@ -114,10 +114,11 @@ def generate_name(
 
         logits = next_logits(model, input_ids)
         current = buffer
-        cont = best_allowed(
-            logits, allowed, texts,
-            lambda text, b=current: is_name_prefix(b, text, names),
-        )
+
+        def is_valid(text: str) -> bool:
+            return is_name_prefix(current, text, names)
+
+        cont = best_allowed(logits, allowed, texts, is_valid)
 
         if complete:  # a longer name exists: stopping is optional
             stop = best_allowed(logits, allowed & quote_mask, texts)
@@ -198,13 +199,14 @@ def generate_number(
     for _ in range(max_len):
         logits = next_logits(model, input_ids)
         current = buffer
-        cont = best_allowed(
-            logits, chars_mask, texts,
-            lambda t, b=current: (
-                len(b) + len(t) <= max_len
-                and is_nb_prefix(b + t, integer_only)
-            ),
-        )
+
+        def fits(text: str) -> bool:
+            return (
+                len(current) + len(text) <= max_len
+                and is_nb_prefix(current + text, integer_only)
+            )
+
+        cont = best_allowed(logits, chars_mask, texts, fits)
 
         if is_nb_complete(buffer, integer_only):
             stop = best_allowed(logits, stop_mask, texts)

@@ -1,7 +1,6 @@
 .env
 data
 llm_sdk
-uv.lock
 .venv
 __pycache__/
 *.py[cod]

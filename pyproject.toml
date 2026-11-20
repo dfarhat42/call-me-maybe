@@ -13,7 +13,13 @@ dependencies = [
 dev = [
     "flake8>=7.4.1",
     "mypy>=2.4.0",
+    "types-regex>=2026.11.19.20261119",
 ]
 
 [tool.uv.sources]
 llm-sdk = { path = "llm_sdk-0.1.0-py3-none-any.whl" }
+
+[[tool.mypy.overrides]]
+module = "llm_sdk.*"
+follow_imports = "skip"
+ignore_errors = true
