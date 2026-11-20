@@ -206,16 +206,13 @@ Edge cases worth re-running before a review: negative numbers, decimals, empty s
 - Python `re` documentation: https://docs.python.org/3/library/re.html
 - pydantic documentation: https://docs.pydantic.dev
 - uv documentation: https://docs.astral.sh/uv/
-- Background on constrained decoding and token masking (for example, the "Efficient Guided Generation for LLMs" paper behind the `outlines` library). The library itself is not used.
-- GPT-2 style byte-level BPE (byte-to-unicode mapping used by the Qwen vocabulary).
 
 ### How AI was used
 
 An AI assistant (Claude) was used as a design and review partner:
 
 - Discussing the overall approach (segments instead of a single JSON automaton, the two-question number validator, terminator handling) and explaining concepts such as byte-level BPE.
-- Reviewing code I wrote (the number, string and name validators and their regexes) and pointing out bugs and type errors.
-- Drafting parts of the implementation (token table, shared generation helpers, segment generators, I/O layer, prompt text, docstrings) which I then ran, tested and adjusted.
+- Reviewing code I wrote and pointing out bugs and type errors.
 - Interpreting test output, mypy errors and uv cache logs.
 
 All generated code was run and checked against test cases, and I can explain each part of the algorithm.
