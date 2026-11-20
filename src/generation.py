@@ -103,14 +103,14 @@ def generate_name(
         raise ValueError("No function names available")
 
     buffer = ""
-    max_steps = max(len(name) for name in names)  # >= 1 char per token
+    max_steps = max(len(name) for name in names)
 
     for _ in range(max_steps):
         complete = is_name_complete(buffer, names)
         longer = has_longer_name(buffer, names)
 
         if complete and not longer:
-            break  # nothing left for the model to decide
+            break
 
         logits = next_logits(model, input_ids)
         current = buffer
@@ -120,7 +120,7 @@ def generate_name(
 
         cont = best_allowed(logits, allowed, texts, is_valid)
 
-        if complete:  # a longer name exists: stopping is optional
+        if complete:
             stop = best_allowed(logits, allowed & quote_mask, texts)
             if stop is not None and (cont is None or stop[1] > cont[1]):
                 break
